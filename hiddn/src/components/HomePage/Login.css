@@ -20,7 +20,7 @@ img {
 
 .welcome {
   width: 22rem;
-  font-size: 4rem;
+  font-size: 3rem;
   text-align: center;
 }
 
@@ -76,7 +76,7 @@ input[type="submit"]:hover {
   align-self: flex-end;
 }
 
-.sign-up {
+.sign-up-in {
   display: flex;
   justify-content: space-between;
   width: 22rem;

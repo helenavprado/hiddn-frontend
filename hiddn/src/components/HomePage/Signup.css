@@ -26,9 +26,9 @@ img {
   width: 100%;
 }
 
-.welcome {
+.create-account {
   width: 22rem;
-  font-size: 4rem;
+  font-size: 3rem;
   text-align: center;
 }
 
@@ -84,7 +84,7 @@ input[type="submit"]:hover {
   align-self: flex-end;
 }
 
-.sign-up {
+.sign-up-in {
   display: flex;
   justify-content: space-between;
   width: 22rem;
@@ -107,8 +107,8 @@ a {
 }
 
 #password-eye {
-  height: 20px;
-  width: 20px;
+  height: 30px;
+  width: 30px;
   margin-left: 1rem;
   cursor: pointer;
 }

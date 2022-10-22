@@ -4,11 +4,32 @@ import Signup from "../components/HomePage/Signup";
 import "./LoginPage.css";
 
 function LoginPage() {
+  const [login, setLogin] = useState(false);
+
+  const handleClick = (event) => {
+    setLogin((prev) => {
+      if (prev) {
+        return (prev = false);
+      } else {
+        return (prev = true);
+      }
+    });
+    event.preventDefault();
+  };
+
+  const changePage = () => {
+    if (login) {
+      return <Signup onclick={handleClick}></Signup>;
+    } else {
+      return <Login onclick={handleClick}></Login>;
+    }
+  };
+
   return (
     <div className="container">
-      <Signup></Signup>
+      {changePage()}
       <div className="image">
-        Hid<span id="d-different">d</span>en
+        Hidd<span id="d-different">e</span>n
       </div>
     </div>
   );
