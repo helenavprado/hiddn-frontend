@@ -1,0 +1,83 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.chat-side-container {
+  background-color: rgb(243, 245, 247);
+  height: 100vh;
+  width: 70vw;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-side-top-bar-container {
+  background-color: #6eacd8;
+  color: white;
+  width: 70vw;
+  height: 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.profile-picture-and-name-container {
+  display: flex;
+  align-items: center;
+}
+
+.chat-side-bottom-bar-container {
+  width: 70vw;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #50514f;
+  padding: 1rem;
+}
+
+.input-container {
+  width: 70vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+#input-message {
+  border: none;
+  border-radius: 130px;
+  padding: 12px 20px 12px 40px;
+  width: 90%;
+  outline: none;
+}
+
+ion-icon {
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+}
+
+#color-yellow {
+  color: rgb(243, 210, 63);
+}
+
+#color-blue {
+  color: #6eacd8;
+}
+
+#real-name-person-chat {
+  font-weight: 600;
+  font-family: "Noto Sans", sans-serif;
+}
+
+.conversartion-container {
+  overflow: scroll;
+  background-color: pink;
+}

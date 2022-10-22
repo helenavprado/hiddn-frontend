@@ -1,0 +1,8 @@
+* {
+  margin: 0;
+}
+
+.main-page-container {
+  display: flex;
+  justify-content: space-between;
+}

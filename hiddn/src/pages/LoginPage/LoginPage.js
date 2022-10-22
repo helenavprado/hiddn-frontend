@@ -28,7 +28,7 @@ function LoginPage() {
   return (
     <div className="container">
       {changePage()}
-      <div className="image">
+      <div className="blue-background">
         Hidd<span id="d-different">e</span>n
       </div>
     </div>
