@@ -1,4 +1,4 @@
-import Login from "../HomePage/Login";
+// import LoginPage from "../../pages/LoginPage/LoginPage";
 import MainPage from "../../pages/MainPage/MainPage";
 
 function App() {

@@ -1,0 +1,16 @@
+.conversation-side-top-bar-container {
+  background-color: #6eacd8;
+  color: white;
+  width: 30vw;
+  height: 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-right: 1px solid #f3f5f7;
+}
+
+.icons-container-menu {
+  display: flex;
+  align-items: center;
+}

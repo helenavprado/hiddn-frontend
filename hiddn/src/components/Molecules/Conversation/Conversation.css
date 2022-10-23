@@ -1,0 +1,40 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.conversation-container {
+  display: flex;
+  align-items: center;
+  width: 27vw;
+  height: 5rem;
+  border-bottom: 1px solid #f3f5f7;
+  justify-content: space-between;
+  margin: 0, 1rem;
+  font-family: "Noto Sans", sans-serif;
+  color: #50514f;
+}
+.big-container {
+  width: 30vw;
+}
+
+.big-container:hover {
+  background-color: #f3f5f7;
+}
+
+.conversation-sub-container {
+  display: flex;
+  align-items: center;
+}
+
+.notification {
+  background-color: #6eacd8;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  margin-right: 0.3rem;
+}
+
+i {
+  font-size: 0.7rem;
+}
