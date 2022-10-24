@@ -1,0 +1,9 @@
+#add-friend-input {
+  border: 1px solid #f3f5f7;
+  border-radius: 130px;
+  padding: 6px 10px 6px 20px;
+  width: 90%;
+  outline: none;
+  margin: 1rem;
+  background-color: #f3f5f7;
+}
