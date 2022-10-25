@@ -1,6 +1,6 @@
 import React from "react";
-import ProfilePicutre from "../ProfilePicure";
-import "../Conversation/Conversation.css";
+import ProfilePicutre from "../ProfilePicture/ProfilePicture";
+import "./Conversation.css";
 
 function Conversation() {
   return (

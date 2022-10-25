@@ -1,7 +1,7 @@
 import React from "react";
-import "./ProfilePicure.css";
+import "./ProfilePicture.css";
 
-function ProfilePicutre() {
+function ProfilePicture() {
   return (
     <img
       alt="this is a pic"
@@ -11,4 +11,4 @@ function ProfilePicutre() {
   );
 }
 
-export default ProfilePicutre;
+export default ProfilePicture;

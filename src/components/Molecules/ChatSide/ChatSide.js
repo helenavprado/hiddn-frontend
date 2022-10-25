@@ -1,13 +1,13 @@
 import React from "react";
 import "./ChatSide.css";
-import ProfilePicutre from "../Molecules/ProfilePicure";
+import ProfilePicture from "../../Atoms/ProfilePicture/ProfilePicture";
 
 function ChatSide() {
   return (
     <div className="chat-side-container">
       <div className="chat-side-top-bar-container">
         <div className="profile-picture-and-name-container">
-          <ProfilePicutre></ProfilePicutre>
+          <ProfilePicture></ProfilePicture>
           <div>
             Jennifer Aninston is{" "}
             <span id="real-name-person-chat">João Victor</span>
