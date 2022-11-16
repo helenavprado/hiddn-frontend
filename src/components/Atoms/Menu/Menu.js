@@ -10,7 +10,7 @@ function Menu(props) {
         <ion-icon
           id="menu-icon"
           onClick={props.handleClick}
-          name="chatbox-ellipses"
+          name="game-controller-sharp"
         ></ion-icon>
         <ion-icon
           id="menu-icon"

@@ -1,19 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ChatSide.css";
 import ProfilePicture from "../../Atoms/ProfilePicture/ProfilePicture";
 
 function ChatSide() {
+  const [guess, setGuess] = useState(true);
+
+  const handleClick = () => {
+    setGuess((prev) => (prev ? false : true));
+  };
+
+  const showInput = () => {
+    if (guess) {
+      return (
+        <div>
+          <input id="guess-who-im-input"></input>
+          <button onClick={handleClick}>Send</button>
+        </div>
+      );
+    } else {
+      return <button onClick={handleClick}>Guess Who I am</button>;
+    }
+  };
+
   return (
     <div className="chat-side-container">
       <div className="chat-side-top-bar-container">
         <div className="profile-picture-and-name-container">
           <ProfilePicture></ProfilePicture>
           <div>
-            Jennifer Aninston is{" "}
-            <span id="real-name-person-chat">João Victor</span>
+            João Victor is <span id="real-name-person-chat">Patrick Star</span>
           </div>
         </div>
-        <ion-icon id="icon" name="flame"></ion-icon>
+        {showInput()}
       </div>
       <div className="conversartion-container"></div>
       <div className="chat-side-bottom-bar-container">

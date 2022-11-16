@@ -81,3 +81,11 @@ ion-icon {
 .conversartion-container {
   overflow: scroll;
 }
+
+#guess-who-im-input {
+  border: 1px solid #f3f5f7;
+  border-radius: 130px;
+  outline: none;
+  margin-right: 1rem;
+  background-color: #f3f5f7;
+}
