@@ -6,7 +6,8 @@ function App() {
   return (
     <div>
       {/* <LoginPage></LoginPage> */}
-      <MainPage></MainPage>
+      {/* <MainPage></MainPage> */}
+      <h1>Successfully Authenticated</h1>
     </div>
   );
 }
