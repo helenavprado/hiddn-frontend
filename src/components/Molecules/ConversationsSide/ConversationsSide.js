@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { keycloakLogout } from "../../../services/keycloak/KeycloakService.js";
+
 import Conversation from "../../Atoms/Conversation/Conversation";
 import Menu from "../../Atoms/Menu/Menu";
 import TextMenu from "../../Atoms/Menu/TextMenu";
@@ -67,7 +69,7 @@ function ConversationsSide() {
             status={profile}
             name="Your bio"
           ></Settings>
-          <button>sign out</button>
+          <button onClick={keycloakLogout()}>Logout</button>
         </div>
       );
     } else if (menuStatus === "person-circle-outline") {

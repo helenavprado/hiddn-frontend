@@ -2,10 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./components/App/App";
 import store from "./components/App/store";
+import { keycloakLogin } from "./services/keycloak/KeycloakService.js";
 
-import { keycloakLogin } from "./services/keycloak/KeycloakService.js"
-
-keycloakLogin()
+keycloakLogin();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
