@@ -1,19 +1,16 @@
-const name = () => {
-  return {
-    type: "nome",
-    payload: "Helena",
-  };
-};
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { nome: "" };
-const nameReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "nome":
-      return { ...initialState, nome: action.payload };
+const testSlice = createSlice({
+  name: "test",
+  initialState: {
+    value: "batatinha",
+  },
+  reducers: {
+    changeName: (state, action) => {
+      state.value = "João";
+    },
+  },
+});
 
-    default:
-      return state;
-  }
-};
-
-export default nameReducer;
+export default testSlice.reducer;
+export const { changeName } = testSlice.actions;

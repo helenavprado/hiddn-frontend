@@ -4,7 +4,6 @@ import { keycloakLogout } from "../../../services/keycloak/KeycloakService.js";
 import Conversation from "../../Atoms/Conversation/Conversation";
 import Menu from "../../Atoms/Menu/Menu";
 import TextMenu from "../../Atoms/Menu/TextMenu";
-import AddNewChat from "../../Atoms/AddNewChat/AddNewChat";
 import AddFriend from "../../Atoms/AddFriend/AddFriend";
 import Settings from "../../Atoms/Settings/Settings";
 import AddNewGame from "../AddNewGame/AddNewGame";

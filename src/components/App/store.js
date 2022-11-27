@@ -1,10 +1,10 @@
-import { createStore, combineReducers } from "redux";
-import nameReducer from "../../features/testeRedux";
+import { configureStore } from "@reduxjs/toolkit";
+import testSlice from "../../features/testeRedux.js";
 
-const reducersSlices = {
-  nameReducer: nameReducer,
-};
-
-const store = createStore(combineReducers(reducersSlices));
+const store = configureStore({
+  reducer: {
+    changeName: testSlice,
+  },
+});
 
 export default store;

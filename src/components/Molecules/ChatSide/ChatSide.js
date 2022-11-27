@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./ChatSide.css";
 import ProfilePicture from "../../Atoms/ProfilePicture/ProfilePicture";
+import { useSelector, useDispatch } from "react-redux";
+import { changeName } from "../../../features/testeRedux";
 
 function ChatSide() {
   const [guess, setGuess] = useState(true);
@@ -8,6 +10,9 @@ function ChatSide() {
   const handleClick = () => {
     setGuess((prev) => (prev ? false : true));
   };
+
+  const dispatch = useDispatch();
+  const change = useSelector((state) => state.changeName.value);
 
   const showInput = () => {
     if (guess) {
@@ -28,7 +33,8 @@ function ChatSide() {
         <div className="profile-picture-and-name-container">
           <ProfilePicture></ProfilePicture>
           <div>
-            João Victor is <span id="real-name-person-chat">Patrick Star</span>
+            <button onClick={() => dispatch(changeName())}></button>
+            {change} <span id="real-name-person-chat">Patrick Star</span>
           </div>
         </div>
         {showInput()}
