@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import testSlice from "../../features/testeRedux.js";
+import newGameSlice from "../../features/setCharacterSlice.js";
 
 const store = configureStore({
   reducer: {
-    changeName: testSlice,
+    newGame: newGameSlice,
   },
 });
 
