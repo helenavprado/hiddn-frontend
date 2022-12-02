@@ -1,5 +1,7 @@
 import Keycloak from "keycloak-js";
 
+import { setInitialUserData } from "../User/UserService.js";
+
 let initOptions = {
     url: "http://localhost:8080/auth/",
     realm: "hidden-auth-server",
@@ -13,15 +15,11 @@ export function keycloakLogin() {
     keycloak.init({ onLoad: initOptions.onload}).success((auth) => {
         if(!auth) {
             window.location.reload();
-        } else {
-            console.info("Authenticated");
         }
     
         localStorage.setItem("bearer-token", keycloak.token);
         localStorage.setItem("refresh-token", keycloak.refreshToken);
-    
-        console.log("Checking Token")
-        console.log(keycloak.token)
+        setInitialUserData(keycloak.token)
     
         setTimeout(() => {
             keycloak.updateToken(70).success((refreshed) => {
