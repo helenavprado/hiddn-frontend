@@ -22,6 +22,11 @@ function Menu(props) {
           onClick={props.handleClick}
           name="settings"
         ></ion-icon>
+        <ion-icon
+          id="menu-icon"
+          onClick={props.handleClick}
+          name="log-out"
+        ></ion-icon>
       </div>
     </div>
   );

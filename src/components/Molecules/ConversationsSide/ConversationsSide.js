@@ -24,75 +24,55 @@ function ConversationsSide() {
     setProfile((prev) => (prev ? false : true));
   };
 
-  const showContent = () => {
-    if (menuStatus === "arrow-back-outline") {
-      return (
-        <div>
-          <Menu handleClick={menuOptionClicked}></Menu>
-          <Conversation></Conversation>
-        </div>
-      );
-    } else if (menuStatus === "game-controller-sharp") {
-      return (
-        <div>
-          <TextMenu backToMenu={backToMenu} titleName={"New Chat"}></TextMenu>
-          <AddNewGame handleClick={menuOptionClicked}></AddNewGame>
-        </div>
-      );
-    } else if (menuStatus === "person-add") {
-      return (
-        <div>
-          <TextMenu
-            backToMenu={backToMenu}
-            titleName={"Add a Friend"}
-          ></TextMenu>
-          <AddFriend></AddFriend>
-        </div>
-      );
-    } else if (menuStatus === "settings") {
-      return (
-        <div>
-          <TextMenu backToMenu={backToMenu} titleName={"Settings"}></TextMenu>
-          <Settings
-            onclick={editProfile}
-            status={profile}
-            name="Your name"
-          ></Settings>
-          <Settings
-            onclick={editProfile}
-            status={profile}
-            name="Your email"
-          ></Settings>
-          <Settings
-            onclick={editProfile}
-            status={profile}
-            name="Your bio"
-          ></Settings>
-          <button onClick={keycloakLogout()}>Logout</button>
-        </div>
-      );
-    } else if (menuStatus === "person-circle-outline") {
-      return (
-        <div>
-          <TextMenu
-            backToMenu={backToMenu}
-            titleName={"Add New Game"}
-          ></TextMenu>
-        </div>
-      );
+  const showContent = (menuName) => {
+    switch (menuName) {
+      case "arrow-back-outline":
+        return (
+          <div>
+            <Menu handleClick={menuOptionClicked}></Menu>
+            <Conversation></Conversation>
+          </div>
+        )
+
+      case "game-controller-sharp":
+        return (
+          <div>
+            <TextMenu backToMenu={backToMenu} titleName={"New Chat"}></TextMenu>
+            <AddNewGame handleClick={menuOptionClicked}></AddNewGame>
+          </div>
+        )
+
+      case "person-add":
+        return (
+          <div>
+            <TextMenu backToMenu={backToMenu} titleName={"Add a Friend"}></TextMenu>
+            <AddFriend></AddFriend>
+          </div>
+        )
+
+      case "settings":
+        return (
+          <div>
+            <TextMenu backToMenu={backToMenu} titleName={"Settings"}></TextMenu>
+            <Settings onclick={editProfile} status={profile} name="Your name"></Settings>
+            <Settings onclick={editProfile} status={profile} name="Your email"></Settings>
+            <Settings onclick={editProfile} status={profile} name="Your bio"></Settings>
+          </div>
+        )
+
+      case "person-circle-outline":
+        return (<div><TextMenu backToMenu={backToMenu} titleName={"Add New Game"}></TextMenu></div>)
+
+      case "log-out":
+        return (keycloakLogout())
+
+      default:
+        break;
     }
   };
 
   return (
-    <div>
-      {showContent()}
-
-      {/* App.js fetches the data and updates the state, 
-      then pass the state via props to Main Page, 
-      which passes it to ConversationsSide which .map 
-      to render each conversation according to 
-      the number os conversations */}
-    </div>
+    <div>{showContent(menuStatus)}</div>
   );
 }
 
