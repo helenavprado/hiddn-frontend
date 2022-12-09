@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Login from "../../components/Molecules/HomePage/Login";
-import Signup from "../../components/Molecules/HomePage/Signup";
+import Login from "../../Molecules/HomePage/Login";
+import Signup from "../../Molecules/HomePage/Signup";
 import "./LoginPage.css";
 
 function LoginPage() {

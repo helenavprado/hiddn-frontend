@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import "./AddNewGame.css";
-import {
-  setCharacter,
-  chooseFriend,
-} from "../../../features/setCharacterSlice";
+import { setCharacter, chooseFriend } from "../../slices/Character/setCharacterSlice.js";
 import { useDispatch } from "react-redux";
 
 function AddNewGame(props) {
