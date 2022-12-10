@@ -7,9 +7,22 @@ import MessageReceived from "../../Atoms/ExchangedMessages/MessageReceived";
 
 function ChatSide() {
   const [guess, setGuess] = useState(true);
+  const [message, setMessage] = useState("");
 
   const handleClick = () => {
     setGuess((prev) => (prev ? false : true));
+  };
+
+  const getMessage = (event) => {
+    setMessage(event.target.value);
+  };
+
+  const sendMessage = () => {
+    document.getElementById("input-message").value = "";
+  };
+
+  const showMessage = () => {
+    return <MessageSent mensagem={message}></MessageSent>;
   };
 
   const character = useSelector((state) => state.newGame.characterName);
@@ -40,28 +53,28 @@ function ChatSide() {
         </div>
         {showInput()}
       </div>
-      <div className="chat-container ">
-        <MessageSent></MessageSent>
-        <MessageSent></MessageSent>
-        <MessageSent></MessageSent>
-        <MessageSent></MessageSent>
-        <MessageSent></MessageSent>
-        <MessageSent></MessageSent>
-        <MessageSent></MessageSent>
-        <MessageSent></MessageSent>
-        <MessageReceived></MessageReceived>
-      </div>
+      <div className="chat-container ">{showMessage()}</div>
       <div className="chat-side-bottom-bar-container">
         <div>
           <i>
             chat expires in <span>24h</span>
           </i>
         </div>
-        <div className="input-container">
+        <form className="input-container" id="messageForm" method="POST">
           <ion-icon id="color-yellow" name="happy"></ion-icon>
-          <input id="input-message" placeholder="Type message"></input>
-          <ion-icon id="color-blue" name="send"></ion-icon>
-        </div>
+          <input
+            id="input-message"
+            placeholder="Type message"
+            onChange={getMessage}
+            type="text"
+          ></input>
+          <ion-icon
+            id="color-blue"
+            type="submit"
+            name="send"
+            onClick={sendMessage}
+          ></ion-icon>
+        </form>
       </div>
     </div>
   );
