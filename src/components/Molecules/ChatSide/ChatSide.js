@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ChatSide.css";
-import ProfilePicture from "../../Atoms/ProfilePicture/ProfilePicture";
+import ProfilePicture from "../../atoms/ProfilePicture/ProfilePicture";
 import { useSelector } from "react-redux";
 
 function ChatSide() {
@@ -12,6 +12,7 @@ function ChatSide() {
 
   const character = useSelector((state) => state.newGame.characterName);
   const friend = useSelector((state) => state.newGame.friendName);
+  // const user = useSelector((state) => state.newUser);
 
   const showInput = () => {
     if (guess) {

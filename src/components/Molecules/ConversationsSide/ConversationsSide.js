@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { keycloakLogout } from "../../../services/keycloak/KeycloakService.js";
+import { keycloakLogout } from "../../services/keycloak/KeycloakService.js";
 
-import Conversation from "../../Atoms/Conversation/Conversation";
-import Menu from "../../Atoms/Menu/Menu";
-import TextMenu from "../../Atoms/Menu/TextMenu";
-import AddFriend from "../../Atoms/AddFriend/AddFriend";
-import Settings from "../../Atoms/Settings/Settings";
+import Conversation from "../../atoms/Conversation/Conversation";
+import Menu from "../../atoms/Menu/Menu";
+import TextMenu from "../../atoms/Menu/TextMenu";
+import AddFriend from "../../atoms/AddFriend/AddFriend";
+import Settings from "../../atoms/Settings/Settings";
 import AddNewGame from "../AddNewGame/AddNewGame";
 
 function ConversationsSide() {
