@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./ChatSide.css";
 import ProfilePicture from "../../Atoms/ProfilePicture/ProfilePicture";
 import { useSelector } from "react-redux";
+import MessageSent from "../../Atoms/ExchangedMessages/MessageSent";
+import MessageReceived from "../../Atoms/ExchangedMessages/MessageReceived";
 
 function ChatSide() {
   const [guess, setGuess] = useState(true);
@@ -38,7 +40,17 @@ function ChatSide() {
         </div>
         {showInput()}
       </div>
-      <div className="conversartion-container"></div>
+      <div className="chat-container ">
+        <MessageSent></MessageSent>
+        <MessageSent></MessageSent>
+        <MessageSent></MessageSent>
+        <MessageSent></MessageSent>
+        <MessageSent></MessageSent>
+        <MessageSent></MessageSent>
+        <MessageSent></MessageSent>
+        <MessageSent></MessageSent>
+        <MessageReceived></MessageReceived>
+      </div>
       <div className="chat-side-bottom-bar-container">
         <div>
           <i>

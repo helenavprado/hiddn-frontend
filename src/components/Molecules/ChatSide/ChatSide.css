@@ -78,14 +78,21 @@ ion-icon {
   font-family: "Noto Sans", sans-serif;
 }
 
-.conversartion-container {
-  overflow: scroll;
-}
-
 #guess-who-im-input {
   border: 1px solid #f3f5f7;
   border-radius: 130px;
   outline: none;
   margin-right: 1rem;
   background-color: #f3f5f7;
+}
+
+.chat-container {
+  flex: 1 0 auto;
+  width: 100%;
+  border: solid 1px #eee;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow-y: scroll;
+  max-height: calc(100% - 150px);
 }
