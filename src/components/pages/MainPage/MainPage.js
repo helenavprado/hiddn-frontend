@@ -2,8 +2,8 @@ import React from "react";
 
 import "./MainPage.css";
 
-import ChatSide from "../../molecules/ChatSide/ChatSide.js";
-import ConversationsSide from "../../molecules/ConversationsSide/ConversationsSide.js";
+import ChatSide from "../../Molecules/ChatSide/ChatSide";
+import ConversationsSide from "../../Molecules/ConversationsSide/ConversationsSide";
 
 function MainPage() {
   return (

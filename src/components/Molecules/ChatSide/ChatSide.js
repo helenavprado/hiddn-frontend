@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ChatSide.css";
-import ProfilePicture from "../../atoms/ProfilePicture/ProfilePicture";
+import ProfilePicture from "../../Atoms/ProfilePicture/ProfilePicture";
 import { useSelector } from "react-redux";
 
 function ChatSide() {

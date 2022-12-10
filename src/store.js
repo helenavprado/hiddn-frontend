@@ -6,7 +6,7 @@ import newUserSlice from "./components/slices/User/UserSlice.js";
 const store = configureStore({
   reducer: {
     newGame: newGameSlice,
-    newUser: newUserSlice
+    newUser: newUserSlice,
   },
 });
 
