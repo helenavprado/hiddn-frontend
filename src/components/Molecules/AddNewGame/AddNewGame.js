@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "./AddNewGame.css";
-import { setCharacter, chooseFriend } from "../../slices/Character/setCharacterSlice.js";
+import {
+  setCharacter,
+  chooseFriend,
+} from "../../slices/Character/setCharacterSlice.js";
 import { useDispatch } from "react-redux";
 import jwt_decode from "jwt-decode";
 
@@ -9,9 +12,6 @@ import jwt_decode from "jwt-decode";
 let token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 let decoded = jwt_decode(token);
-console.log(decoded.name);
-
-console.log(decoded);
 
 function AddNewGame(props) {
   const dispatch = useDispatch();

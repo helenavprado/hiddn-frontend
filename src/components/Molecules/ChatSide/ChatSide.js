@@ -7,22 +7,24 @@ import MessageReceived from "../../Atoms/ExchangedMessages/MessageReceived";
 
 function ChatSide() {
   const [guess, setGuess] = useState(true);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState([]);
 
   const handleClick = () => {
     setGuess((prev) => (prev ? false : true));
   };
 
-  const getMessage = (event) => {
-    setMessage(event.target.value);
-  };
-
   const sendMessage = () => {
-    document.getElementById("input-message").value = "";
+    setMessage((prev) => [
+      ...prev,
+      document.getElementById("input-message").value,
+    ]);
   };
 
   const showMessage = () => {
-    return <MessageSent mensagem={message}></MessageSent>;
+    document.getElementById("input-message").value = "";
+    return message.map((message) => {
+      return <MessageSent message={message}></MessageSent>;
+    });
   };
 
   const character = useSelector((state) => state.newGame.characterName);
@@ -53,6 +55,7 @@ function ChatSide() {
         </div>
         {showInput()}
       </div>
+      {/* CHAT HERE */}
       <div className="chat-container ">{showMessage()}</div>
       <div className="chat-side-bottom-bar-container">
         <div>
@@ -65,7 +68,6 @@ function ChatSide() {
           <input
             id="input-message"
             placeholder="Type message"
-            onChange={getMessage}
             type="text"
           ></input>
           <ion-icon
