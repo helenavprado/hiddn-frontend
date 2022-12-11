@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ChatSide.css";
 import ProfilePicture from "../../Atoms/ProfilePicture/ProfilePicture";
 import { useSelector } from "react-redux";
@@ -6,28 +6,44 @@ import MessageSent from "../../Atoms/ExchangedMessages/MessageSent";
 import MessageReceived from "../../Atoms/ExchangedMessages/MessageReceived";
 import EmojiPicker from "emoji-picker-react";
 
-function ChatSide({ socket }) {
+function ChatSide({ socket, room }) {
   const [guess, setGuess] = useState(true);
-  const [message, setMessage] = useState([]);
+  const [message, setMessage] = useState("");
+  const [messageList, setMessageList] = useState([]);
   const [emojiPickerShown, setEmojiPicker] = useState(false);
 
   const handleClick = () => {
     setGuess((prev) => (prev ? false : true));
   };
+  //async cause we want to wait for the message to be sent so we can update the state
+  const sendMessage = async () => {
+    if (message !== "") {
+      const messageData = {
+        room: room,
+        message: message,
+        time:
+          new Date(Date.now()).getHours() +
+          ":" +
+          new Date(Date.now()).getMinutes(),
+      };
+      console.log(messageData);
 
-  const sendMessage = () => {
-    setMessage((prev) => [
-      ...prev,
-      document.getElementById("input-message").value,
-    ]);
+      await socket.emit("send_message", messageData);
+      setMessageList((prev) => [...prev, messageData]);
+    }
   };
 
-  const showMessage = () => {
-    // document.getElementById("input-message").value = "";
-    return message.map((message) => {
-      return <MessageSent message={message}></MessageSent>;
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      setMessageList((prev) => [...prev, data]);
     });
-  };
+  }, [socket]);
+
+  // const showMessage = () => {
+  //   return messageList.map((messageContent) => {
+  //     return <MessageSent message={messageContent.message}></MessageSent>;
+  //   })
+  // };
 
   const handleClickEmojiPicker = () => {
     setEmojiPicker((prev) => (prev ? false : true));
@@ -68,7 +84,11 @@ function ChatSide({ socket }) {
         {showInput()}
       </div>
       {/* CHAT HERE */}
-      <div className="chat-container ">{showMessage()}</div>
+      <div className="chat-container ">
+        {messageList.map((messageContent) => {
+          return <MessageSent message={messageContent.message}></MessageSent>;
+        })}
+      </div>
       <div className="chat-side-bottom-bar-container">
         <div>
           <i>
@@ -86,6 +106,9 @@ function ChatSide({ socket }) {
             id="input-message"
             placeholder="Type message"
             type="text"
+            onChange={(event) => {
+              setMessage(event.target.value);
+            }}
           ></input>
           <ion-icon
             id="color-blue"

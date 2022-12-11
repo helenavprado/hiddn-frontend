@@ -5,14 +5,14 @@ import "./MainPage.css";
 import ChatSide from "../../Molecules/ChatSide/ChatSide";
 import ConversationsSide from "../../Molecules/ConversationsSide/ConversationsSide";
 
-function MainPage({ socket }) {
+function MainPage({ socket, room }) {
   return (
     <div className="main-page-container">
       <div>
         <ConversationsSide></ConversationsSide>
       </div>
       <div>
-        <ChatSide socket={socket}></ChatSide>
+        <ChatSide socket={socket} room={room}></ChatSide>
       </div>
     </div>
   );
