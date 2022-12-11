@@ -6,7 +6,7 @@ import MessageSent from "../../Atoms/ExchangedMessages/MessageSent";
 import MessageReceived from "../../Atoms/ExchangedMessages/MessageReceived";
 import EmojiPicker from "emoji-picker-react";
 
-function ChatSide() {
+function ChatSide({ socket }) {
   const [guess, setGuess] = useState(true);
   const [message, setMessage] = useState([]);
   const [emojiPickerShown, setEmojiPicker] = useState(false);
@@ -100,3 +100,4 @@ function ChatSide() {
 }
 
 export default ChatSide;
+//.

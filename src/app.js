@@ -1,9 +1,12 @@
 import MainPage from "./components/pages/MainPage/MainPage.js";
+import io from "socket.io-client";
+
+const socket = io.connect("http://localhost:3002");
 
 function App() {
   return (
     <div>
-      <MainPage></MainPage>
+      <MainPage socket={socket}></MainPage>
     </div>
   );
 }
