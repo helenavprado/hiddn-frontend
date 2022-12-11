@@ -6,6 +6,7 @@ const socket = io.connect("http://localhost:3002");
 
 function App() {
   const [room, setRoom] = useState("");
+  const [username, setUsername] = useState("");
 
   const goButton = () => {
     socket.emit("join_room", room);
@@ -15,13 +16,20 @@ function App() {
     <div>
       <input
         type="text"
+        placeholder="username"
+        onChange={(event) => {
+          setUsername(event.target.value);
+        }}
+      ></input>
+      <input
+        type="text"
         placeholder="room id"
         onChange={(event) => {
           setRoom(event.target.value);
         }}
       ></input>
       <button onClick={goButton}>go</button>
-      <MainPage socket={socket} room={room}></MainPage>
+      <MainPage socket={socket} room={room} username={username}></MainPage>
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import React from "react";
 import "./ExchangedMessages.css";
 
-function MessageReceived() {
+function MessageReceived(props) {
   return (
     <div className="messages receiving">
-      <div className="message">this is another message</div>
+      <div className="message">{props.message}</div>
     </div>
   );
 }

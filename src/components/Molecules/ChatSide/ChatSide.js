@@ -5,8 +5,9 @@ import { useSelector } from "react-redux";
 import MessageSent from "../../Atoms/ExchangedMessages/MessageSent";
 import MessageReceived from "../../Atoms/ExchangedMessages/MessageReceived";
 import EmojiPicker from "emoji-picker-react";
+import ScrollToBottom from "react-scroll-to-bottom";
 
-function ChatSide({ socket, room }) {
+function ChatSide({ socket, room, username }) {
   const [guess, setGuess] = useState(true);
   const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
@@ -19,6 +20,7 @@ function ChatSide({ socket, room }) {
   const sendMessage = async () => {
     if (message !== "") {
       const messageData = {
+        username: username,
         room: room,
         message: message,
         time:
@@ -30,6 +32,7 @@ function ChatSide({ socket, room }) {
 
       await socket.emit("send_message", messageData);
       setMessageList((prev) => [...prev, messageData]);
+      setMessage("");
     }
   };
 
@@ -38,12 +41,6 @@ function ChatSide({ socket, room }) {
       setMessageList((prev) => [...prev, data]);
     });
   }, [socket]);
-
-  // const showMessage = () => {
-  //   return messageList.map((messageContent) => {
-  //     return <MessageSent message={messageContent.message}></MessageSent>;
-  //   })
-  // };
 
   const handleClickEmojiPicker = () => {
     setEmojiPicker((prev) => (prev ? false : true));
@@ -83,12 +80,25 @@ function ChatSide({ socket, room }) {
         </div>
         {showInput()}
       </div>
-      {/* CHAT HERE */}
-      <div className="chat-container ">
-        {messageList.map((messageContent) => {
-          return <MessageSent message={messageContent.message}></MessageSent>;
-        })}
+
+      <div className="chat-container">
+        <ScrollToBottom className="scroll-to-bottom-cointainer">
+          {messageList.map((messageContent) => {
+            if (username === messageContent.username) {
+              return (
+                <MessageSent message={messageContent.message}></MessageSent>
+              );
+            } else {
+              return (
+                <MessageReceived
+                  message={messageContent.message}
+                ></MessageReceived>
+              );
+            }
+          })}
+        </ScrollToBottom>
       </div>
+
       <div className="chat-side-bottom-bar-container">
         <div>
           <i>
@@ -96,7 +106,7 @@ function ChatSide({ socket, room }) {
           </i>
         </div>
         {showEmojiPicker()}
-        <form className="input-container" id="messageForm" method="POST">
+        <div className="input-container" id="messageForm">
           <ion-icon
             id="color-yellow"
             name="happy"
@@ -106,8 +116,12 @@ function ChatSide({ socket, room }) {
             id="input-message"
             placeholder="Type message"
             type="text"
+            value={message}
             onChange={(event) => {
               setMessage(event.target.value);
+            }}
+            onKeyPress={(event) => {
+              event.key === "Enter" && sendMessage();
             }}
           ></input>
           <ion-icon
@@ -116,7 +130,7 @@ function ChatSide({ socket, room }) {
             name="send"
             onClick={sendMessage}
           ></ion-icon>
-        </form>
+        </div>
       </div>
     </div>
   );

@@ -89,10 +89,12 @@ ion-icon {
 .chat-container {
   flex: 1 0 auto;
   width: 100%;
-  border: solid 1px #eee;
   display: flex;
   flex-direction: column;
   padding: 10px;
-  overflow-y: scroll;
   max-height: calc(100% - 150px);
+}
+
+.scroll-to-bottom-cointainer {
+  height: 100%;
 }
