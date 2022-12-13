@@ -19,3 +19,13 @@
   justify-content: space-between;
   align-items: center;
 }
+
+#add-new-game-input {
+  border: 1px solid #f3f5f7;
+  border-radius: 130px;
+  padding: 6px 10px 6px 20px;
+  margin: 1rem 0;
+  width: 90%;
+  outline: none;
+  background-color: #f3f5f7;
+}

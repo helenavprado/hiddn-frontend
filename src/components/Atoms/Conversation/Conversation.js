@@ -12,9 +12,6 @@ function Conversation() {
         </div>
         <div className="conversation-sub-container">
           <div className="notification"></div>
-          <div>
-            <i>expires in 24 hours</i>
-          </div>
         </div>
       </div>
     </div>

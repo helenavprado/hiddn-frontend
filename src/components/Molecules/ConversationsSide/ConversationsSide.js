@@ -10,7 +10,6 @@ import AddNewGame from "../AddNewGame/AddNewGame";
 
 function ConversationsSide() {
   const [menuStatus, setMenuStatus] = useState("arrow-back-outline");
-  const [profile, setProfile] = useState(true);
 
   const backToMenu = (event) => {
     setMenuStatus((prev) => event.target.name);
@@ -18,10 +17,6 @@ function ConversationsSide() {
 
   const menuOptionClicked = (event) => {
     setMenuStatus((prev) => event.target.name);
-  };
-
-  const editProfile = () => {
-    setProfile((prev) => (prev ? false : true));
   };
 
   const showContent = (menuName) => {
@@ -57,21 +52,9 @@ function ConversationsSide() {
         return (
           <div>
             <TextMenu backToMenu={backToMenu} titleName={"Settings"}></TextMenu>
-            <Settings
-              onclick={editProfile}
-              status={profile}
-              name="Your name"
-            ></Settings>
-            <Settings
-              onclick={editProfile}
-              status={profile}
-              name="Your email"
-            ></Settings>
-            <Settings
-              onclick={editProfile}
-              status={profile}
-              name="Your bio"
-            ></Settings>
+            <Settings name="Your name"></Settings>
+            <Settings name="Your email"></Settings>
+            <Settings name="Your bio"></Settings>
           </div>
         );
 

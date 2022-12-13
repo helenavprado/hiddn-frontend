@@ -8,14 +8,14 @@ import EmojiPicker from "emoji-picker-react";
 import ScrollToBottom from "react-scroll-to-bottom";
 
 function ChatSide({ socket, room, username }) {
-  const [guess, setGuess] = useState(true);
   const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [emojiPickerShown, setEmojiPicker] = useState(false);
+  const [guessInput, setGuessInput] = useState("");
+  const [gameOver, setGameOver] = useState(false);
+  const [isGuessing, setIsGuessing] = useState(false);
+  const [firstGuess, setFirstGuess] = useState(true);
 
-  const handleClick = () => {
-    setGuess((prev) => (prev ? false : true));
-  };
   //async cause we want to wait for the message to be sent so we can update the state
   const sendMessage = async () => {
     if (message !== "") {
@@ -50,18 +50,67 @@ function ChatSide({ socket, room, username }) {
   const friend = useSelector((state) => state.newGame.friendName);
   // const user = useSelector((state) => state.newUser);
 
-  const showInput = () => {
-    if (guess) {
-      return (
-        <div>
-          <input id="guess-who-im-input"></input>
-          <button onClick={handleClick}>Send</button>
-        </div>
-      );
+  //TRYING AGAIN
+  const sendGuessClick = () => {
+    if (guessInput === "Spongebob") {
+      setGameOver(true);
     } else {
-      return <button onClick={handleClick}>Guess Who I am</button>;
+      setIsGuessing(false);
+      setFirstGuess(false);
     }
   };
+
+  const handleClickIsGuessing = () => {
+    setIsGuessing(true);
+  };
+
+  const showInput = () => {
+    if (!gameOver) {
+      if (isGuessing) {
+        return (
+          <div>
+            <input
+              id="guess-who-im-input"
+              onChange={(event) => {
+                setGuessInput(event.target.value);
+              }}
+            ></input>
+            <button class="who-i-am-buttons" onClick={sendGuessClick}>
+              Send
+            </button>
+          </div>
+        );
+      } else if (!isGuessing && firstGuess) {
+        return (
+          <button onClick={handleClickIsGuessing} class="who-i-am-buttons">
+            I know who I am!
+          </button>
+        );
+      } else if (!isGuessing && !firstGuess) {
+        return (
+          <div>
+            <div id="return-answer">Not quite right!</div>
+            <button
+              onClick={() => setIsGuessing(true)}
+              class="who-i-am-buttons"
+            >
+              Try again
+            </button>
+          </div>
+        );
+      }
+    } else {
+      return (
+        <div>
+          <div id="return-answer">That's correct! You are {guessInput}</div>
+
+          <button class="who-i-am-buttons">End game</button>
+        </div>
+      );
+    }
+  };
+
+  //END OF TRY
 
   const showEmojiPicker = () => {
     if (emojiPickerShown) {
@@ -100,11 +149,6 @@ function ChatSide({ socket, room, username }) {
       </div>
 
       <div className="chat-side-bottom-bar-container">
-        <div>
-          <i>
-            chat expires in <span>24h</span>
-          </i>
-        </div>
         {showEmojiPicker()}
         <div className="input-container" id="messageForm">
           <ion-icon
