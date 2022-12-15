@@ -102,7 +102,7 @@ function ChatSide({ socket, room, username }) {
     } else {
       return (
         <div>
-          <div id="return-answer">That's correct! You are {guessInput}</div>
+          <div id="return-answer"> 🏆 That's correct! You are {guessInput}</div>
 
           <button class="who-i-am-buttons">End game</button>
         </div>

@@ -1,0 +1,25 @@
+.who-i-am-buttons {
+  background-color: #ffffff;
+  color: #50514f;
+  border: none;
+  border-radius: 130px;
+  padding: 6px 10px;
+  font-family: "Noto Sans", sans-serif;
+  box-shadow: 0 5px rgb(167, 167, 167);
+}
+
+.who-i-am-buttons:hover {
+  cursor: pointer;
+  background-color: #f3f1f1;
+}
+
+.who-i-am-buttons:active {
+  background-color: #ffffff;
+  box-shadow: 0 2px rgb(145, 145, 145);
+  transform: translateY(4px);
+}
+
+#return-answer {
+  display: inline;
+  margin-right: 1rem;
+}
