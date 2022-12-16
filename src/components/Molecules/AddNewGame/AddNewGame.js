@@ -1,61 +1,49 @@
-import React, { useState } from "react";
-import "./AddNewGame.css";
-import {
-  setCharacter,
-  chooseFriend,
-} from "../../slices/Character/setCharacterSlice.js";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { getUserFriends, getFriendWithEmailLike } from "../../services/http/HttpService.js";
 import { useDispatch } from "react-redux";
-import jwt_decode from "jwt-decode";
+import { setUserFriends } from "../../slices/User/UserSlice.js";
 
-//decode
-
-let token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
-let decoded = jwt_decode(token);
+import "./AddNewGame.css";
 
 function AddNewGame(props) {
+  const [friends, setFriends] = useState([]);
+  const [targetFriendEmail, setTargetFriendEmail] = useState("");
+  const user = useSelector(state => state.newUser);
   const dispatch = useDispatch();
-  const [characterName, setCharacterName] = useState("");
-  const [friend, setFriend] = useState("");
 
-  const getCharacterName = (event) => {
-    setCharacterName(event.target.value);
+  const getFriends = (userIdentifier) => {
+    let userFriends = getUserFriends(userIdentifier);
+    return userFriends
   };
 
-  const getFriendName = (event) => {
-    setFriend(event.target.value);
-  };
+  const getTargetFriendInput = (input) => {
+    setTargetFriendEmail(input);
+  }
 
-  // const handleClick = () => {
-  //   dispatch(setCharacter(characterName)
-  //   dispatch(chooseFriend(friendName)
-  // }
+  const createChat = (targetFriendEmail) => {
+    let targetFriendData = getFriendWithEmailLike(user.userIdentifier, targetFriendEmail);
+    console.log("target friend")
+    console.log(targetFriendData)
+    setTargetFriendEmail("")
+  }
+
+  useEffect(() => {
+    let listOfFriends = getFriends(user.userIdentifier);
+    setFriends(listOfFriends);
+    console.log("Friends no user effect")
+    console.log(friends)
+    dispatch(setUserFriends(listOfFriends));
+  }, []);
 
   return (
     <div className="add-new-game-container">
-      <div className="add-new-game-title">Who do you want to play with?</div>
+      <div className="add-new-game-title">Who do you want to talk with?</div>
       <div className="add-new-game-sub-container">
-        <input
-          onChange={getFriendName}
-          id="add-new-game-input"
-          placeholder="Search for a friend"
-        ></input>
+        <input value={targetFriendEmail} onChange={(e) => getTargetFriendInput(e.target.value)} id="add-new-game-input" placeholder="Enter your friend's e-mail"></input>
       </div>
-      <div id="list-of-friends">list of friends</div>
-      <div className="add-new-game-title">Who will this person be?</div>
-      <div className="add-new-game-sub-container">
-        <input
-          onChange={getCharacterName}
-          id="add-new-game-input"
-          placeholder="Jennifer Aninston, Spongebob, Bill Gates..."
-        ></input>
-      </div>
-      <button
-        id="add-new-game-button"
-        onClick={() => dispatch(chooseFriend(friend))}
-      >
-        Start new game
-      </button>
+      {/* {console.log(friends)} */}
+      <button id="add-new-game-button" onClick={() => createChat(targetFriendEmail)}>Start New Chat</button>
     </div>
   );
 }

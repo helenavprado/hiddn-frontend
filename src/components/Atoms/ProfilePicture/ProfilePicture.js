@@ -1,16 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
 import "./ProfilePicture.css";
 
-function ProfilePicture() {
-  const user = useSelector(state => state.newUser)
-
+function ProfilePicture({ pictureUrl }) {
   return (
     <img
       alt="this is a pic"
       className="profile-picture"
-      src={user.userPicture}
+      src={pictureUrl}
     ></img>
   );
 }

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./ChatSide.css";
-import ProfilePicture from "../../Atoms/ProfilePicture/ProfilePicture";
+import ProfilePicture from "../../atoms/ProfilePicture/ProfilePicture";
 import { useSelector } from "react-redux";
-import MessageSent from "../../Atoms/ExchangedMessages/MessageSent";
-import MessageReceived from "../../Atoms/ExchangedMessages/MessageReceived";
+import MessageSent from "../../atoms/ExchangedMessages/MessageSent";
+import MessageReceived from "../../atoms/ExchangedMessages/MessageReceived";
 import EmojiPicker from "emoji-picker-react";
 import ScrollToBottom from "react-scroll-to-bottom";
 
-function ChatSide({ socket, room, username }) {
+function ChatSide({ socket, username }) {
   const [message, setMessage] = useState("");
   //pass window.localStorage.getItem("key") inside the useState below
   const [messageList, setMessageList] = useState([]);
@@ -17,19 +17,20 @@ function ChatSide({ socket, room, username }) {
   const [isGuessing, setIsGuessing] = useState(false);
   const [firstGuess, setFirstGuess] = useState(true);
 
+  const room = useSelector((state) => state.newRoom);
+
   //async cause we want to wait for the message to be sent so we can update the state
   const sendMessage = async () => {
     if (message !== "") {
       const messageData = {
         username: username,
-        room: room,
+        room: room.chatIdentifier,
         message: message,
         time:
           new Date(Date.now()).getHours() +
           ":" +
           new Date(Date.now()).getMinutes(),
       };
-      console.log(messageData);
 
       await socket.emit("send_message", messageData);
       setMessageList((prev) => [...prev, messageData]);
@@ -57,13 +58,18 @@ function ChatSide({ socket, room, username }) {
     });
   }, [socket]);
 
+  useEffect(() => {
+    socket.emit("join_room", room.chatIdentifier);
+  }, []);
+
+  useEffect(() => {
+    setMessageList([]);
+    socket.emit("join_room", room.chatIdentifier);
+  }, [room]);
+
   const handleClickEmojiPicker = () => {
     setEmojiPicker((prev) => (prev ? false : true));
   };
-
-  const character = useSelector((state) => state.newGame.characterName);
-  const friend = useSelector((state) => state.newGame.friendName);
-  // const user = useSelector((state) => state.newUser);
 
   //TRYING AGAIN
   const sendGuessClick = () => {
@@ -95,12 +101,6 @@ function ChatSide({ socket, room, username }) {
             </button>
           </div>
         );
-      } else if (!isGuessing && firstGuess) {
-        return (
-          <button onClick={handleClickIsGuessing} class="who-i-am-buttons">
-            I know who I am!
-          </button>
-        );
       } else if (!isGuessing && !firstGuess) {
         return (
           <div>
@@ -117,15 +117,12 @@ function ChatSide({ socket, room, username }) {
     } else {
       return (
         <div>
-          <div id="return-answer"> 🏆 That's correct! You are {guessInput}</div>
-
+          <div id="return-answer">That's correct! You are {guessInput}</div>
           <button class="who-i-am-buttons">End game</button>
         </div>
       );
     }
   };
-
-  //END OF TRY
 
   const showEmojiPicker = () => {
     if (emojiPickerShown) {
@@ -137,10 +134,8 @@ function ChatSide({ socket, room, username }) {
     <div className="chat-side-container">
       <div className="chat-side-top-bar-container">
         <div className="profile-picture-and-name-container">
-          <ProfilePicture></ProfilePicture>
-          <div>
-            {friend} is <span id="real-name-person-chat">{character}</span>
-          </div>
+          <ProfilePicture pictureUrl={room.chatPicture}></ProfilePicture>
+          <div>{room.chatName}</div>
         </div>
         {showInput()}
       </div>
