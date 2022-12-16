@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./ChatSide.css";
-import ProfilePicture from "../../Atoms/ProfilePicture/ProfilePicture";
+import ProfilePicture from "../../atoms/ProfilePicture/ProfilePicture";
 import { useSelector } from "react-redux";
-import MessageSent from "../../Atoms/ExchangedMessages/MessageSent";
-import MessageReceived from "../../Atoms/ExchangedMessages/MessageReceived";
+import MessageSent from "../../atoms/ExchangedMessages/MessageSent";
+import MessageReceived from "../../atoms/ExchangedMessages/MessageReceived";
 import EmojiPicker from "emoji-picker-react";
 import ScrollToBottom from "react-scroll-to-bottom";
 
-function ChatSide({ socket, room, username }) {
+function ChatSide({ socket, username }) {
   const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [emojiPickerShown, setEmojiPicker] = useState(false);
@@ -16,19 +16,17 @@ function ChatSide({ socket, room, username }) {
   const [isGuessing, setIsGuessing] = useState(false);
   const [firstGuess, setFirstGuess] = useState(true);
 
+  const room = useSelector((state) => state.newRoom);
+
   //async cause we want to wait for the message to be sent so we can update the state
   const sendMessage = async () => {
     if (message !== "") {
       const messageData = {
         username: username,
-        room: room,
+        room: room.chatIdentifier,
         message: message,
-        time:
-          new Date(Date.now()).getHours() +
-          ":" +
-          new Date(Date.now()).getMinutes(),
+        time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
       };
-      console.log(messageData);
 
       await socket.emit("send_message", messageData);
       setMessageList((prev) => [...prev, messageData]);
@@ -42,13 +40,18 @@ function ChatSide({ socket, room, username }) {
     });
   }, [socket]);
 
+  useEffect(() => {
+    socket.emit("join_room", room.chatIdentifier);
+  }, []);
+
+  useEffect(() => {
+    setMessageList([])
+    socket.emit("join_room", room.chatIdentifier);
+  }, [room]);
+
   const handleClickEmojiPicker = () => {
     setEmojiPicker((prev) => (prev ? false : true));
   };
-
-  const character = useSelector((state) => state.newGame.characterName);
-  const friend = useSelector((state) => state.newGame.friendName);
-  // const user = useSelector((state) => state.newUser);
 
   //TRYING AGAIN
   const sendGuessClick = () => {
@@ -69,33 +72,15 @@ function ChatSide({ socket, room, username }) {
       if (isGuessing) {
         return (
           <div>
-            <input
-              id="guess-who-im-input"
-              onChange={(event) => {
-                setGuessInput(event.target.value);
-              }}
-            ></input>
-            <button class="who-i-am-buttons" onClick={sendGuessClick}>
-              Send
-            </button>
+            <input id="guess-who-im-input" onChange={(event) => { setGuessInput(event.target.value);}}></input>
+            <button class="who-i-am-buttons" onClick={sendGuessClick}>Send</button>
           </div>
-        );
-      } else if (!isGuessing && firstGuess) {
-        return (
-          <button onClick={handleClickIsGuessing} class="who-i-am-buttons">
-            I know who I am!
-          </button>
         );
       } else if (!isGuessing && !firstGuess) {
         return (
           <div>
             <div id="return-answer">Not quite right!</div>
-            <button
-              onClick={() => setIsGuessing(true)}
-              class="who-i-am-buttons"
-            >
-              Try again
-            </button>
+            <button onClick={() => setIsGuessing(true)} class="who-i-am-buttons">Try again</button>
           </div>
         );
       }
@@ -103,14 +88,11 @@ function ChatSide({ socket, room, username }) {
       return (
         <div>
           <div id="return-answer">That's correct! You are {guessInput}</div>
-
           <button class="who-i-am-buttons">End game</button>
         </div>
       );
     }
   };
-
-  //END OF TRY
 
   const showEmojiPicker = () => {
     if (emojiPickerShown) {
@@ -122,10 +104,8 @@ function ChatSide({ socket, room, username }) {
     <div className="chat-side-container">
       <div className="chat-side-top-bar-container">
         <div className="profile-picture-and-name-container">
-          <ProfilePicture></ProfilePicture>
-          <div>
-            {friend} is <span id="real-name-person-chat">{character}</span>
-          </div>
+          <ProfilePicture pictureUrl={room.chatPicture}></ProfilePicture>
+          <div>{room.chatName}</div>
         </div>
         {showInput()}
       </div>
@@ -134,15 +114,9 @@ function ChatSide({ socket, room, username }) {
         <ScrollToBottom className="scroll-to-bottom-cointainer">
           {messageList.map((messageContent) => {
             if (username === messageContent.username) {
-              return (
-                <MessageSent message={messageContent.message}></MessageSent>
-              );
+              return (<MessageSent message={messageContent.message}></MessageSent>);
             } else {
-              return (
-                <MessageReceived
-                  message={messageContent.message}
-                ></MessageReceived>
-              );
+              return (<MessageReceived message={messageContent.message}></MessageReceived>);
             }
           })}
         </ScrollToBottom>
@@ -151,28 +125,9 @@ function ChatSide({ socket, room, username }) {
       <div className="chat-side-bottom-bar-container">
         {showEmojiPicker()}
         <div className="input-container" id="messageForm">
-          <ion-icon
-            id="color-yellow"
-            name="happy"
-            onClick={handleClickEmojiPicker}
-          ></ion-icon>
-          <input
-            id="input-message"
-            placeholder="Type message"
-            type="text"
-            value={message}
-            onChange={(event) => {
-              setMessage(event.target.value);
-            }}
-            onKeyPress={(event) => {
-              event.key === "Enter" && sendMessage();
-            }}
-          ></input>
-          <ion-icon
-            id="color-blue"
-            type="submit"
-            name="send"
-            onClick={sendMessage}
+          <ion-icon id="color-yellow" name="happy" onClick={handleClickEmojiPicker}></ion-icon>
+          <input id="input-message" placeholder="Type message" type="text" value={message} onChange={(event) => {setMessage(event.target.value);}} onKeyPress={(event) => { event.key === "Enter" && sendMessage();}}></input>
+          <ion-icon id="color-blue" type="submit" name="send" onClick={sendMessage}
           ></ion-icon>
         </div>
       </div>

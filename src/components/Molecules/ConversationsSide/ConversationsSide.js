@@ -1,15 +1,17 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { keycloakLogout } from "../../services/keycloak/KeycloakService.js";
 
-import Conversation from "../../Atoms/Conversation/Conversation";
-import Menu from "../../Atoms/Menu/Menu";
-import TextMenu from "../../Atoms/Menu/TextMenu";
-import AddFriend from "../../Atoms/AddFriend/AddFriend";
-import Settings from "../../Atoms/Settings/Settings";
+import Conversation from "../../atoms/Conversation/Conversation";
+import Menu from "../../atoms/Menu/Menu";
+import TextMenu from "../../atoms/Menu/TextMenu";
+import AddFriend from "../../atoms/AddFriend/AddFriend";
+import Settings from "../../atoms/Settings/Settings";
 import AddNewGame from "../AddNewGame/AddNewGame";
 
 function ConversationsSide() {
   const [menuStatus, setMenuStatus] = useState("arrow-back-outline");
+  const user = useSelector(state => state.newUser);
 
   const backToMenu = (event) => {
     setMenuStatus((prev) => event.target.name);
@@ -25,7 +27,7 @@ function ConversationsSide() {
         return (
           <div>
             <Menu handleClick={menuOptionClicked}></Menu>
-            <Conversation></Conversation>
+            <Conversation userIdentifier={user.userIdentifier}></Conversation>
           </div>
         );
 
@@ -40,10 +42,7 @@ function ConversationsSide() {
       case "person-add":
         return (
           <div>
-            <TextMenu
-              backToMenu={backToMenu}
-              titleName={"Add a Friend"}
-            ></TextMenu>
+            <TextMenu backToMenu={backToMenu} titleName={"Add a Friend"}></TextMenu>
             <AddFriend></AddFriend>
           </div>
         );
@@ -52,20 +51,15 @@ function ConversationsSide() {
         return (
           <div>
             <TextMenu backToMenu={backToMenu} titleName={"Settings"}></TextMenu>
-            <Settings name="Your name"></Settings>
-            <Settings name="Your email"></Settings>
-            <Settings name="Your bio"></Settings>
+            <Settings name="Your name" data={`${user.userFirstName} ${user.userLastName}`}></Settings>
+            <Settings name="Your email" data={user.userEmail}></Settings>
+            <Settings name="Your id" data={user.userIdentifier}></Settings>
           </div>
         );
 
       case "person-circle-outline":
         return (
-          <div>
-            <TextMenu
-              backToMenu={backToMenu}
-              titleName={"Add New Game"}
-            ></TextMenu>
-          </div>
+          <div><TextMenu backToMenu={backToMenu} titleName={"Add New Game"}></TextMenu></div>
         );
 
       case "log-out":
