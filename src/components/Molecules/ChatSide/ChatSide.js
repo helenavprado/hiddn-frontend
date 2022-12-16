@@ -9,6 +9,7 @@ import ScrollToBottom from "react-scroll-to-bottom";
 
 function ChatSide({ socket, room, username }) {
   const [message, setMessage] = useState("");
+  //pass window.localStorage.getItem("key") inside the useState below
   const [messageList, setMessageList] = useState([]);
   const [emojiPickerShown, setEmojiPicker] = useState(false);
   const [guessInput, setGuessInput] = useState("");
@@ -32,6 +33,13 @@ function ChatSide({ socket, room, username }) {
 
       await socket.emit("send_message", messageData);
       setMessageList((prev) => [...prev, messageData]);
+      //local storage
+      const obj = {
+        room: {
+          message: messageList,
+        },
+      };
+      window.localStorage.setItem("key", obj);
       setMessage("");
     }
   };
@@ -39,6 +47,13 @@ function ChatSide({ socket, room, username }) {
   useEffect(() => {
     socket.on("receive_message", (data) => {
       setMessageList((prev) => [...prev, data]);
+      //local storage
+      const obj = {
+        room: {
+          message: messageList,
+        },
+      };
+      window.localStorage.setItem("key", obj);
     });
   }, [socket]);
 
